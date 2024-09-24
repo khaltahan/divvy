@@ -1,0 +1,23 @@
+IF NOT EXISTS (SELECT * FROM sys.external_file_formats WHERE name = 'SynapseDelimitedTextFormat')
+    CREATE EXTERNAL FILE FORMAT [SynapseDelimitedTextFormat]
+    WITH ( FORMAT_TYPE = DELIMITEDTEXT );
+
+IF NOT EXISTS (SELECT * FROM sys.external_data_sources WHERE name = 'azure_dfs_core_windows_net')
+    CREATE EXTERNAL DATA SOURCE [azure_dfs_core_windows_net]
+    WITH ( LOCATION = 'abfss://divvycont@divvystr.dfs.core.windows.net' );
+
+CREATE EXTERNAL TABLE staging_rider (
+    rider_id nvarchar(4000),
+    firstname nvarchar(4000),
+    lastname nvarchar(4000),
+    address nvarchar(4000),
+    birthday nvarchar(4000),
+    account_start_id varchar(50),
+    account_end_id varchar(50),
+    is_member bit
+)
+WITH (
+    LOCATION = 'src/publicrider.csv',
+    DATA_SOURCE = [azure_dfs_core_windows_net],
+    FILE_FORMAT = [SynapseDelimitedTextFormat]
+);
