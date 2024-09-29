@@ -4,9 +4,8 @@ CREATE EXTERNAL TABLE [dbo].[dim_station] WITH(
     FILE_FORMAT = [SynapseDelimitedTextFormat]
 ) AS (
     SELECT 
-        station_id,
-        name,
-        latitude,
-        longitude
+        CAST(station_id AS bigint) AS station_id,
+        name AS station_name,
+        CONCAT(latitude, ',', longitude) AS station_location
     FROM staging_station
 );
