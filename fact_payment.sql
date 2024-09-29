@@ -9,5 +9,5 @@ CREATE EXTERNAL TABLE [dbo].[fact_payment] WITH(
         p.rider_id,
         d.date_id AS payment_date
     FROM staging_payment p
-    JOIN date_dim d ON CAST(p.date AS DATE) = d.date
+    JOIN dim_date d ON CAST(p.date AS DATE) = d.date
 );
