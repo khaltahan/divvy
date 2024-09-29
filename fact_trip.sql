@@ -11,6 +11,6 @@ CREATE EXTERNAL TABLE [dbo].[fact_trip] WITH(
         YEAR(d.date) - YEAR(r.birthday) AS rider_age,
         d.date_id AS trip_date
     FROM staging_trip t
-    JOIN dim_rider r ON t.rider_id = r.rider_id
-    JOIN dim_date d ON CAST(t.start_at AS DATE) = d.date
+    JOIN rider_dim r ON t.rider_id = r.rider_id
+    JOIN date_dim d ON CAST(t.start_at AS DATE) = d.date
 );
