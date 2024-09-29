@@ -5,12 +5,8 @@ CREATE EXTERNAL TABLE [dbo].[dim_rider] WITH(
 ) AS (
     SELECT 
         CAST(rider_id AS bigint) AS rider_id,
-        firstname AS first_name,
-        lastname AS last_name,
-        address,
+        CONCAT(firstname, ' ', lastname) AS rider_name,
         birthday,
-        account_start_id AS account_start_date,
-        account_end_id AS account_end_date,
-        is_member
+        account_start_id AS rider_join_date
     FROM staging_rider
 );
